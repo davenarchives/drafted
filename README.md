@@ -1,2 +1,2 @@
 # drafted
-send a special message to someone anonymousl
+send a special message to someone anonymously
