@@ -55,7 +55,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drafted</title>
-    <link href="https://fonts.googleapis.com/css2?family=Beanie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Reenie+Beanie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* General Body Styling */
@@ -76,7 +76,7 @@ try {
         header {
             width: 100%;
             background: rgba(0, 0, 0, 0.5);
-            padding: 20px 0; /* Top and bottom padding */
+            padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -86,29 +86,28 @@ try {
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 10px; /* Reduced left and right padding */
+            padding: 0 10px;
         }
 
-        /* Updated h1 Logo Styling */
         .logo h1 {
             font-family: 'Beanie', cursive;
             font-size: 1.75rem;
             font-weight: normal;
             margin: 0;
-            padding: 0 10px; /* Reduced left and right padding */
+            padding: 0 10px;
             color: #ff7e5f;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         nav {
             display: flex;
-            gap: 10px; /* Reduced gap between nav items */
+            gap: 10px;
         }
 
         nav a {
             text-decoration: none;
             color: #fff;
-            padding: 10px 15px; /* Adjusted padding for nav links */
+            padding: 10px 15px;
             border-radius: 25px;
             transition: all 0.3s ease;
         }
@@ -168,7 +167,7 @@ try {
 
         /* Updated Message Cards Styling */
         .message {
-            font-family: 'Beanie', cursive;
+            font-family: 'Inter', sans-serif;
             background: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 10px;
@@ -178,6 +177,17 @@ try {
             border-left: 5px solid #ff7e5f;
             margin: 10px 0;
             position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .message p {
+            margin: 1rem 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit to 3 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .message::before {
@@ -218,9 +228,80 @@ try {
         }
 
         .timestamp {
+            font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
             margin-top: 10px;
+        }
+
+        /* Popup Styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            width: 80%;
+            max-width: 500px;
+            color: #fff;
+        }
+
+        .popup p {
+            margin: 1rem 0;
+        }
+
+        .popup strong {
+            color: #ff7e5f;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+
+        .popup a {
+            color: #feb47b;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            text-decoration: none;
+        }
+
+        .popup a:hover {
+            text-decoration: underline;
+        }
+
+        .popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff7e5f;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Quoted Message Styling */
+        .popup .quoted-message {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7); /* Slightly greyish */
+            margin: 1rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid rgba(255, 255, 255, 0.3); /* Subtle border for quoted effect */
         }
 
         form {
@@ -271,7 +352,6 @@ try {
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Button Container Styling */
         .button-container {
             display: flex;
             justify-content: center;
@@ -325,9 +405,9 @@ try {
             echo '<div id="messages-container">';
             if (count($notes) > 0) {
                 foreach ($notes as $note) {
-                    echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($note['to_person'])) . '">';
+                    echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($note['to_person'])) . '" data-note="' . htmlspecialchars($note['note']) . '" data-music-link="' . htmlspecialchars($note['music_link']) . '" data-timestamp="' . htmlspecialchars($note['created_at']) . '">';
                     echo '<p><strong>To:</strong> ' . htmlspecialchars($note['to_person']) . '</p>';
-                    echo '<p>' . htmlspecialchars($note['note']) . '</p>';
+                    echo '<p>' . nl2br(htmlspecialchars($note['note'])) . '</p>';
                     if ($note['music_link']) {
                         echo '<p><a href="' . htmlspecialchars($note['music_link']) . '" target="_blank">🎵 Listen to the song</a></p>';
                     }
@@ -390,9 +470,9 @@ try {
 
             echo '<div id="messages-container">';
             foreach ($customMessages as $message) {
-                echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($message['to_person'])) . '">';
+                echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($message['to_person'])) . '" data-note="' . htmlspecialchars($message['note']) . '" data-music-link="' . htmlspecialchars($message['music_link']) . '" data-timestamp="' . htmlspecialchars($message['created_at']) . '">';
                 echo '<p><strong>To:</strong> ' . htmlspecialchars($message['to_person']) . '</p>';
-                echo '<p>' . htmlspecialchars($message['note']) . '</p>';
+                echo '<p>' . nl2br(htmlspecialchars($message['note'])) . '</p>';
                 if ($message['music_link']) {
                     echo '<p><a href="' . htmlspecialchars($message['music_link']) . '" target="_blank">🎵 Listen to the song</a></p>';
                 }
@@ -404,11 +484,72 @@ try {
         ?>
     </div>
 
+    <!-- Popup for full message -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <p><strong>To:</strong> <span id="popup-recipient"></span></p>
+        <div class="quoted-message" id="popup-note"></div>
+        <p id="popup-music-link"></p>
+        <p class="timestamp"><strong>Posted on:</strong> <span id="popup-timestamp"></span></p>
+        <button class="close-btn" id="close-btn">Close</button>
+    </div>
+
     <footer>
         <p>© 2025 Drafted. All Rights Reserved.</p>
     </footer>
 
     <script>
+        // Truncate long messages
+        const messages = document.querySelectorAll('.message p');
+        messages.forEach(message => {
+            if (message.textContent.length > 100) {
+                message.textContent = message.textContent.substring(0, 100) + '...';
+            }
+        });
+
+        // Popup functionality
+        const messageContainers = document.querySelectorAll('.message');
+        const popup = document.getElementById('popup');
+        const overlay = document.getElementById('overlay');
+        const popupRecipient = document.getElementById('popup-recipient');
+        const popupNote = document.getElementById('popup-note');
+        const popupMusicLink = document.getElementById('popup-music-link');
+        const popupTimestamp = document.getElementById('popup-timestamp');
+        const closeBtn = document.getElementById('close-btn');
+
+        messageContainers.forEach(container => {
+            container.addEventListener('click', () => {
+                const recipient = container.getAttribute('data-recipient');
+                const note = container.getAttribute('data-note');
+                const musicLink = container.getAttribute('data-music-link');
+                const timestamp = container.getAttribute('data-timestamp');
+
+                popupRecipient.textContent = recipient;
+                popupNote.innerHTML = note.replace(/\n/g, '<br>'); // Preserve line breaks
+                popupTimestamp.textContent = timestamp;
+
+                if (musicLink) {
+                    popupMusicLink.innerHTML = '<a href="' + musicLink + '" target="_blank">🎵 Listen to the song</a>';
+                } else {
+                    popupMusicLink.innerHTML = '';
+                }
+
+                popup.style.display = 'block';
+                overlay.style.display = 'block';
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        overlay.addEventListener('click', () => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Search functionality
         document.getElementById('search-button').addEventListener('click', function() {
             filterMessages();
         });
@@ -429,3 +570,4 @@ try {
     </script>
 </body>
 </html>
+
