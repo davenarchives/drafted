@@ -1,4 +1,8 @@
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Include the database connection
 include 'db.php';
 
@@ -72,7 +76,7 @@ try {
         header {
             width: 100%;
             background: rgba(0, 0, 0, 0.5);
-            padding: 20px 0;
+            padding: 20px 0; /* Top and bottom padding */
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -82,29 +86,29 @@ try {
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 10px; /* Reduced left and right padding */
         }
 
         /* Updated h1 Logo Styling */
         .logo h1 {
-            font-family: 'Beanie', cursive; /* Use Beanie font */
-            font-size: 1.75rem; /* Adjust size as needed */
-            font-weight: normal; /* Beanie is a handwritten font, so no bold */
+            font-family: 'Beanie', cursive;
+            font-size: 1.75rem;
+            font-weight: normal;
             margin: 0;
-            padding: 0 20px;
-            color: #ff7e5f; /* Match your theme */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Optional: Add a subtle shadow */
+            padding: 0 10px; /* Reduced left and right padding */
+            color: #ff7e5f;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         nav {
             display: flex;
-            gap: 20px;
+            gap: 10px; /* Reduced gap between nav items */
         }
 
         nav a {
             text-decoration: none;
             color: #fff;
-            padding: 10px 20px;
+            padding: 10px 15px; /* Adjusted padding for nav links */
             border-radius: 25px;
             transition: all 0.3s ease;
         }
@@ -164,13 +168,13 @@ try {
 
         /* Updated Message Cards Styling */
         .message {
-            font-family: 'Beanie', cursive; /* Use Beanie font for notes */
+            font-family: 'Beanie', cursive;
             background: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             text-align: left;
-            font-weight: normal; /* Beanie is a handwritten font, so no bold */
+            font-weight: normal;
             border-left: 5px solid #ff7e5f;
             margin: 10px 0;
             position: relative;
@@ -271,16 +275,16 @@ try {
         .button-container {
             display: flex;
             justify-content: center;
-            gap: 20px; /* Add spacing between buttons */
-            margin-top: 30px; /* Add margin above the buttons */
-            margin-bottom: 30px; /* Add margin below the buttons */
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
         .button-container button {
             background: #ff7e5f;
             color: #fff;
             border: none;
-            padding: 10px 20px; /* Smaller padding for smaller buttons */
+            padding: 10px 20px;
             border-radius: 10px;
             font-size: 1rem;
             cursor: pointer;
