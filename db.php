@@ -1,8 +1,11 @@
 <?php
-$host = 'localhost';
-$dbname = 'notes_app';
-$user = 'root';
-$pass = '';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$host = '####'; 
+$dbname = '####'; 
+$user = '#####'; 
+$pass = '#####'; 
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
@@ -11,4 +14,3 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 ?>
-
