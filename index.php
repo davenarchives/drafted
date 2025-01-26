@@ -47,6 +47,15 @@ try {
 } catch (PDOException $e) {
     die("Failed to fetch messages: " . $e->getMessage());
 }
+
+// Function to format the date
+function formatDate($dateString) {
+    $date = new DateTime($dateString);
+    return [
+        'posted_on' => $date->format('Y-m-d'), // Format for "Posted on"
+        'sent_on' => $date->format('F j, Y')   // Format for "Sent on"
+    ];
+}
 ?>
 
 <!DOCTYPE html>
@@ -165,7 +174,7 @@ try {
             gap: 20px;
         }
 
-        /* Updated Message Cards Styling */
+        /* Message Cards Styling */
         .message {
             font-family: 'Inter', sans-serif;
             background: rgba(255, 255, 255, 0.1);
@@ -298,10 +307,10 @@ try {
         /* Quoted Message Styling */
         .popup .quoted-message {
             font-style: italic;
-            color: rgba(255, 255, 255, 0.7); /* Slightly greyish */
+            color: rgba(255, 255, 255, 0.7);
             margin: 1rem 0;
             padding-left: 1rem;
-            border-left: 3px solid rgba(255, 255, 255, 0.3); /* Subtle border for quoted effect */
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
         }
 
         form {
@@ -405,13 +414,14 @@ try {
             echo '<div id="messages-container">';
             if (count($notes) > 0) {
                 foreach ($notes as $note) {
-                    echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($note['to_person'])) . '" data-note="' . htmlspecialchars($note['note']) . '" data-music-link="' . htmlspecialchars($note['music_link']) . '" data-timestamp="' . htmlspecialchars($note['created_at']) . '">';
+                    $formattedDate = formatDate($note['created_at']);
+                    echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($note['to_person'])) . '" data-note="' . htmlspecialchars($note['note']) . '" data-music-link="' . htmlspecialchars($note['music_link']) . '" data-timestamp="' . htmlspecialchars($formattedDate['sent_on']) . '">';
                     echo '<p><strong>To:</strong> ' . htmlspecialchars($note['to_person']) . '</p>';
                     echo '<p>' . nl2br(htmlspecialchars($note['note'])) . '</p>';
                     if ($note['music_link']) {
                         echo '<p><a href="' . htmlspecialchars($note['music_link']) . '" target="_blank">🎵 Listen to the song</a></p>';
                     }
-                    echo '<p class="timestamp">Posted on: ' . htmlspecialchars($note['created_at']) . '</p>';
+                    echo '<p class="timestamp"><strong>Sent on:</strong> ' . htmlspecialchars($formattedDate['sent_on']) . '</p>';
                     echo '</div>';
                 }
             } else {
@@ -470,13 +480,14 @@ try {
 
             echo '<div id="messages-container">';
             foreach ($customMessages as $message) {
-                echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($message['to_person'])) . '" data-note="' . htmlspecialchars($message['note']) . '" data-music-link="' . htmlspecialchars($message['music_link']) . '" data-timestamp="' . htmlspecialchars($message['created_at']) . '">';
+                $formattedDate = formatDate($message['created_at']);
+                echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($message['to_person'])) . '" data-note="' . htmlspecialchars($message['note']) . '" data-music-link="' . htmlspecialchars($message['music_link']) . '" data-timestamp="' . htmlspecialchars($formattedDate['sent_on']) . '">';
                 echo '<p><strong>To:</strong> ' . htmlspecialchars($message['to_person']) . '</p>';
                 echo '<p>' . nl2br(htmlspecialchars($message['note'])) . '</p>';
                 if ($message['music_link']) {
                     echo '<p><a href="' . htmlspecialchars($message['music_link']) . '" target="_blank">🎵 Listen to the song</a></p>';
                 }
-                echo '<p class="timestamp">Posted on: ' . htmlspecialchars($message['created_at']) . '</p>';
+                echo '<p class="timestamp"><strong>Sent on:</strong> ' . htmlspecialchars($formattedDate['sent_on']) . '</p>';
                 echo '</div>';
             }
             echo '</div>';
@@ -490,7 +501,7 @@ try {
         <p><strong>To:</strong> <span id="popup-recipient"></span></p>
         <div class="quoted-message" id="popup-note"></div>
         <p id="popup-music-link"></p>
-        <p class="timestamp"><strong>Posted on:</strong> <span id="popup-timestamp"></span></p>
+        <p class="timestamp"><strong>Sent on:</strong> <span id="popup-timestamp"></span></p>
         <button class="close-btn" id="close-btn">Close</button>
     </div>
 
@@ -570,4 +581,3 @@ try {
     </script>
 </body>
 </html>
-
