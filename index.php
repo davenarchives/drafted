@@ -190,7 +190,8 @@ function formatDate($dateString) {
             overflow: hidden;
         }
 
-        .message p {
+        .note-text {
+            font-style: italic; /* Italicize the note text */
             margin: 1rem 0;
             display: -webkit-box;
             -webkit-line-clamp: 3; /* Limit to 3 lines */
@@ -260,7 +261,8 @@ function formatDate($dateString) {
             color: #fff;
         }
 
-        .popup p {
+        .popup .note-text {
+            font-style: italic; /* Italicize the note text in the popup */
             margin: 1rem 0;
         }
 
@@ -417,7 +419,7 @@ function formatDate($dateString) {
                     $formattedDate = formatDate($note['created_at']);
                     echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($note['to_person'])) . '" data-note="' . htmlspecialchars($note['note']) . '" data-music-link="' . htmlspecialchars($note['music_link']) . '" data-timestamp="' . htmlspecialchars($formattedDate['sent_on']) . '">';
                     echo '<p><strong>To:</strong> ' . htmlspecialchars($note['to_person']) . '</p>';
-                    echo '<p>' . nl2br(htmlspecialchars($note['note'])) . '</p>';
+                    echo '<p class="note-text">' . nl2br(htmlspecialchars($note['note'])) . '</p>'; // Italicized note text
                     if ($note['music_link']) {
                         echo '<p><a href="' . htmlspecialchars($note['music_link']) . '" target="_blank">🎵 Listen to the song</a></p>';
                     }
@@ -483,7 +485,7 @@ function formatDate($dateString) {
                 $formattedDate = formatDate($message['created_at']);
                 echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($message['to_person'])) . '" data-note="' . htmlspecialchars($message['note']) . '" data-music-link="' . htmlspecialchars($message['music_link']) . '" data-timestamp="' . htmlspecialchars($formattedDate['sent_on']) . '">';
                 echo '<p><strong>To:</strong> ' . htmlspecialchars($message['to_person']) . '</p>';
-                echo '<p>' . nl2br(htmlspecialchars($message['note'])) . '</p>';
+                echo '<p class="note-text">' . nl2br(htmlspecialchars($message['note'])) . '</p>'; // Italicized note text
                 if ($message['music_link']) {
                     echo '<p><a href="' . htmlspecialchars($message['music_link']) . '" target="_blank">🎵 Listen to the song</a></p>';
                 }
@@ -499,7 +501,7 @@ function formatDate($dateString) {
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
         <p><strong>To:</strong> <span id="popup-recipient"></span></p>
-        <div class="quoted-message" id="popup-note"></div>
+        <div class="quoted-message note-text" id="popup-note"></div> <!-- Italicized note text -->
         <p id="popup-music-link"></p>
         <p class="timestamp"><strong>Sent on:</strong> <span id="popup-timestamp"></span></p>
         <button class="close-btn" id="close-btn">Close</button>
