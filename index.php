@@ -189,7 +189,7 @@ function formatDate($dateString) {
     </div>
 
     <footer>
-        <p>© 2025 Drafted. All Rights Reserved.</p>
+        <p>© <span id="current-year"></span> Drafted. All Rights Reserved.</p>
     </footer>
 
     <script src="script.js"></script>
