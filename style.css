@@ -315,3 +315,10 @@ footer {
 .button-container button:hover {
     background: #feb47b;
 }
+
+/* Mobile layout (1 column) */
+@media (max-width: 768px) {
+    #messages-container {
+        grid-template-columns: 1fr; /* 1 column */
+    }
+}
