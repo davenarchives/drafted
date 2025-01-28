@@ -66,6 +66,3 @@ function filterMessages() {
         }
     });
 }
-
-// Automatically update the year in the footer
-document.getElementById('current-year').textContent = new Date().getFullYear();

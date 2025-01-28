@@ -6,19 +6,39 @@ ini_set('display_errors', 1);
 // Include the database connection
 include 'db.php';
 
+// Function to format the date
+function formatDate($dateString) {
+    $date = new DateTime($dateString);
+    return [
+        'posted_on' => $date->format('Y-m-d'), // Format for "Posted on"
+        'sent_on' => $date->format('F j, Y')   // Format for "Sent on"
+    ];
+}
+
 // Handle form submission for new notes
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add') {
     $to_person = $_POST['to_person'] ?? '';
     $note = $_POST['note'] ?? '';
     $music_link = $_POST['music_link'] ?? '';
 
+    // Check if the link is a Spotify link
+    $is_spotify_link = false;
+    $spotify_embed_code = '';
+    if (strpos($music_link, 'open.spotify.com/track/') !== false) {
+        $is_spotify_link = true;
+        $track_id = substr($music_link, strrpos($music_link, '/') + 1); // Extract track ID
+        $spotify_embed_code = '<iframe src="https://open.spotify.com/embed/track/' . $track_id . '" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
+    }
+
     if (!empty($note)) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO notes (to_person, note, music_link) VALUES (:to_person, :note, :music_link)");
+            $stmt = $pdo->prepare("INSERT INTO notes (to_person, note, music_link, is_spotify_link, spotify_embed_code) VALUES (:to_person, :note, :music_link, :is_spotify_link, :spotify_embed_code)");
             $stmt->execute([
                 ':to_person' => $to_person,
                 ':note' => $note,
-                ':music_link' => $music_link
+                ':music_link' => $music_link,
+                ':is_spotify_link' => $is_spotify_link,
+                ':spotify_embed_code' => $spotify_embed_code
             ]);
         } catch (PDOException $e) {
             die("Failed to submit message: " . $e->getMessage());
@@ -47,15 +67,6 @@ try {
 } catch (PDOException $e) {
     die("Failed to fetch messages: " . $e->getMessage());
 }
-
-// Function to format the date
-function formatDate($dateString) {
-    $date = new DateTime($dateString);
-    return [
-        'posted_on' => $date->format('Y-m-d'), // Format for "Posted on"
-        'sent_on' => $date->format('F j, Y')   // Format for "Sent on"
-    ];
-}
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +77,7 @@ function formatDate($dateString) {
     <title>Drafted</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Reenie+Beanie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -101,7 +112,9 @@ function formatDate($dateString) {
                     echo '<div class="message" data-recipient="' . htmlspecialchars(strtolower($note['to_person'])) . '" data-note="' . htmlspecialchars($note['note']) . '" data-music-link="' . htmlspecialchars($note['music_link']) . '" data-timestamp="' . htmlspecialchars($formattedDate['sent_on']) . '">';
                     echo '<p><strong>To:</strong> ' . htmlspecialchars($note['to_person']) . '</p>';
                     echo '<p class="note-text">' . nl2br(htmlspecialchars($note['note'])) . '</p>'; // Italicized note text
-                    if ($note['music_link']) {
+                    if ($note['is_spotify_link']) {
+                        echo $note['spotify_embed_code']; // Embed Spotify iframe
+                    } elseif ($note['music_link']) {
                         echo '<p><a href="' . htmlspecialchars($note['music_link']) . '" target="_blank">🎵 Listen to the song</a></p>';
                     }
                     echo '<p class="timestamp"><strong>Sent on:</strong> ' . htmlspecialchars($formattedDate['sent_on']) . '</p>';
@@ -189,7 +202,7 @@ function formatDate($dateString) {
     </div>
 
     <footer>
-        <p>© <span id="current-year"></span> Drafted. All Rights Reserved.</p>
+        <p>© 2025 Drafted. All Rights Reserved.</p>
     </footer>
 
     <script src="script.js"></script>
