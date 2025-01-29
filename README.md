@@ -63,7 +63,7 @@ This structure provides a clear overview of the project files and their purposes
 ## Installation
 
 1. Clone the repository: git clone [https://github.com/yourusername/drafted.git](https://github.com/yourusername/drafted.git)
-2. 2. Upload the files to your web server.
+2. Upload the files to your web server.
 3. Create a MySQL database and import the `database.sql` file (you'll need to create this based on the structure we've discussed).
 4. Update the `db.php` file with your database credentials.
 
