@@ -104,20 +104,14 @@ $password = 'your_password';
 
 ## Hosting on InfinityFree
 
-InfinityFree is a free web hosting service that supports PHP and MySQL. Here's how to host your Drafted project on InfinityFree:
+InfinityFree is a free web hosting service that supports PHP and MySQL. Here's how to host the project on InfinityFree:
 
 1. Sign up for an account at [InfinityFree](https://infinityfree.net/).
-
 2. After signing in, go to the control panel and create a new account.
-
 3. In the control panel, find the "MySQL Databases" section and create a new database. Note down the database name, username, and password.
-
 4. Use an FTP client (like FileZilla) or the file manager in the control panel to upload your Drafted files to the `htdocs` directory of your InfinityFree account.
-
 5. Update the `db.php` file with the MySQL database details you noted in step 3.
-
 6. Find the "PHP Settings" in the control panel and ensure that PHP version 7.4 or higher is selected.
-
 7. Your site should now be live at the URL provided by InfinityFree (usually something like `your-site-name.infinityfreeapp.com`).
 
 ### Important Notes for InfinityFree Hosting:
