@@ -22,6 +22,7 @@ $page = $_GET['page'] ?? 'home';
     <title>Drafted</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Reenie+Beanie&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg" href="images/drafted.svg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
