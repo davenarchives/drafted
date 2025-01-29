@@ -14,7 +14,7 @@
 
 ## Introduction
 
-Drafted is a web-based platform designed to let users anonymously share heartfelt messages, regrets, or unspoken thoughts. Each message can be accompanied by music links to enhance emotional impact. The platform allows users to submit, browse, and delete messages securely.
+Drafted is a web-based platform designed to let users anonymously share heartfelt messages, regrets, or unspoken thoughts. Each message can be accompanied by music links to enhance emotional impact. The platform allows users to submit and browse messages.
 
 ## Features
 
