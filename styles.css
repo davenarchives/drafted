@@ -11,7 +11,6 @@ body {
     user-select: none;
 }
 
-/* Header Styling */
 header {
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
@@ -104,7 +103,6 @@ nav a:hover {
     gap: 20px;
 }
 
-/* Message Cards Styling */
 .message {
     font-family: 'Inter', sans-serif;
     background: rgba(255, 255, 255, 0.1);
@@ -121,17 +119,17 @@ nav a:hover {
 }
 
 .note-text {
-    font-style: italic; /* Italicize the note text */
+    font-style: italic;
     margin: 1rem 0;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .message::before {
-    content: '“';
+    content: '"';
     font-size: 3rem;
     color: #ff7e5f;
     position: absolute;
@@ -141,7 +139,7 @@ nav a:hover {
 }
 
 .message::after {
-    content: '”';
+    content: '"';
     font-size: 3rem;
     color: #ff7e5f;
     position: absolute;
@@ -174,7 +172,6 @@ nav a:hover {
     margin-top: 10px;
 }
 
-/* Popup Styling */
 .popup {
     display: none;
     position: fixed;
@@ -189,11 +186,16 @@ nav a:hover {
     width: 80%;
     max-width: 500px;
     color: #fff;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .popup .note-text {
-    font-style: italic; /* Italicize the note text in the popup */
+    font-style: italic;
     margin: 1rem 0;
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
 }
 
 .popup strong {
@@ -236,7 +238,6 @@ nav a:hover {
     z-index: 999;
 }
 
-/* Quoted Message Styling */
 .popup .quoted-message {
     font-style: italic;
     color: rgba(255, 255, 255, 0.7);
@@ -316,9 +317,8 @@ footer {
     background: #feb47b;
 }
 
-/* Mobile layout (1 column) */
 @media (max-width: 768px) {
     #messages-container {
-        grid-template-columns: 1fr; /* 1 column */
+        grid-template-columns: 1fr;
     }
 }
