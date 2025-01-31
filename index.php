@@ -33,9 +33,11 @@ $page = $_GET['page'] ?? 'home';
         <?php
         switch ($page) {
             case 'browse':
+                include 'browsenote.php';
                 include 'browse.php';
                 break;
             case 'submit':
+                include 'submitnote.php';
                 include 'submit.php';
                 break;
             default:
